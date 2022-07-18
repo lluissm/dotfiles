@@ -1,17 +1,12 @@
-current_date=$(date +"%d_%m_%Y_%H_%M")
+export ZSHDOTFILES_DIR="$HOME/.dotfiles"
 
-# copy .zshrc while saving old one
-zshrc_path=~/.zshrc
-if [ -f "$zshrc_path" ]; then
-    mv $zshrc_path "${zshrc_path}.backup_${current_date}"
-fi
-cp .zshrc $zshrc_path
-
-# copy starship config
-starship_config_path=~/.config/starship.toml
-if [ -f "$starship_config_path" ]; then
-    mv $starship_config_path "${starship_config_path}.backup_${current_date}"
+if [ ! -d "$ZSHDOTFILES_DIR" ]; then
+    git clone https://github.com/lluissm/dotfiles $ZSHDOTFILES_DIR
+    cd $ZSHDOTFILES_DIR
 else
-    mkdir -p ~/.config/
+    cd $ZSHDOTFILES_DIR
+    git pull --all
 fi
-cp starship.toml $starship_config_path
+
+# execute other script
+./install.local.sh
