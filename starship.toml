@@ -1,0 +1,136 @@
+[character]
+success_symbol = "[➜](bold green) "
+error_symbol = "[✗](bold red) "
+
+# Inserts a blank line between shell prompts
+#add_newline = false
+
+#[git_commit]
+#tag_symbol = " tag "
+
+#[git_status]
+#ahead = ">"
+#behind = "<"
+#diverged = "<>"
+#renamed = "r"
+#deleted = "x"
+
+[gcloud]
+disabled = true
+
+[aws]
+symbol = "aws "
+
+[c]
+symbol = "C "
+
+[cobol]
+disabled = true
+
+[conda]
+disabled = true
+
+[crystal]
+disabled = true
+
+[cmake]
+symbol = "cmake "
+
+[daml]
+disabled = true
+
+[dart]
+symbol = "dart "
+
+[deno]
+symbol = "deno "
+
+[dotnet]
+symbol = ".NET "
+
+[directory]
+read_only = " ro"
+
+[docker_context]
+symbol = "docker "
+
+[elixir]
+disabled = true
+
+[elm]
+disabled = true
+
+[git_branch]
+symbol = "git "
+
+[golang]
+symbol = "go "
+
+[hg_branch]
+disabled = true
+
+[java]
+symbol = "java "
+
+[julia]
+disabled = true
+
+[kotlin]
+symbol = "kt "
+
+[lua]
+disabled = true
+
+[nodejs]
+symbol = "nodejs "
+
+[memory_usage]
+symbol = "memory "
+
+[nim]
+disabled = true
+
+[nix_shell]
+disabled = true
+
+[ocaml]
+disabled = true
+
+[package]
+symbol = "pkg "
+
+[perl]
+disabled = true
+
+[php]
+disabled = true
+
+[pulumi]
+disabled = true
+
+[purescript]
+disabled = true
+
+[python]
+symbol = "py "
+
+[raku]
+disabled = true
+
+[ruby]
+symbol = "ruby "
+
+[rust]
+symbol = "rust "
+
+[scala]
+disabled = true
+
+[spack]
+disabled = true
+
+[sudo]
+symbol = "sudo "
+
+[swift]
+symbol = "swift "
