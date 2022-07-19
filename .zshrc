@@ -12,6 +12,15 @@ exists() {
     command -v "$1" >/dev/null 2>&1
 }
 
+# used by this script to notify what is being installed
+info() {
+    local BLUE='\033[1;36m'
+    local NO_COLOR='\033[0m'
+    echo
+    echo "${BLUE}${1}${NO_COLOR}"
+    echo
+}
+
 ############################## OH-MY-ZSH ##############################
 
 export ZSH="$HOME/.oh-my-zsh"
@@ -19,6 +28,7 @@ export ZSH_CUSTOM="$ZSH/custom"
 
 # Install oh-my-zsh if not installed (preserving .zshrc file)
 if [ ! -d $ZSH ]; then
+    info "Installing oh-my-zsh..."
     curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh -s -- --keep-zshrc
 fi
 
@@ -27,6 +37,7 @@ setup_custom_plugin() {
     local plugin_url=$2
 
     if [ ! -d $plugin_path ]; then
+        info "Installing $plugin_url..."
         git clone $plugin_url $plugin_path
     fi
 }
@@ -80,6 +91,7 @@ if [ ! -d $DIRENV_DIR ]; then
     mkdir -p $DIRENV_DIR
     # direnv installer looks for bin_path env
     export bin_path=$DIRENV_DIR
+    info "Installing direnv..."
     curl -sfL https://direnv.net/install.sh | bash
     unset bin_path
 fi
@@ -89,6 +101,7 @@ eval "$(direnv hook zsh)"
 # NVM (node version manager): https://github.com/nvm-sh/nvm
 export NVM_DIR="$HOME/.nvm"
 if [ ! -d $NVM_DIR ]; then
+    info "Installing nvm..."
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | sh
 fi
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
@@ -99,6 +112,7 @@ export DENO_DIR="$HOME/.deno"
 if [ ! -d $DENO_DIR ]; then
     # deno installer looks for DENO_INSTALL env
     export DENO_INSTALL=$DENO_DIR
+    info "Installing deno..."
     curl -fsSL https://deno.land/install.sh | sh
     unset DENO_INSTALL
 fi
@@ -107,6 +121,7 @@ export PATH="$DENO_DIR/bin:$PATH"
 # GVM (Go version manager): https://github.com/moovweb/gvm
 export GVM_DIR="$HOME/.gvm"
 if [ ! -d $GVM_DIR ]; then
+    info "Installing gvm..."
     bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
 fi
 [ -s "$GVM_DIR/scripts/gvm" ] && \. "$GVM_DIR/scripts/gvm"
@@ -114,6 +129,7 @@ fi
 # RUST (programming language): https://www.rust-lang.org/
 export CARGO_DIR="$HOME/.cargo"
 if [ ! -d $CARGO_DIR ]; then
+    info "Installing rust..."
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 fi
 [ -s "$CARGO_DIR/env" ] && \. "$CARGO_DIR/env"
@@ -122,6 +138,7 @@ fi
 if [[ "$OSTYPE" == "darwin"* ]]; then
     export PATH="$PATH:$HOME/bin:/usr/local/bin:/opt/homebrew/bin"
     if ! exists brew; then
+        info "Installing brew..."
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
 fi
@@ -129,6 +146,7 @@ fi
 # GIT_UTILS (clone and update git repos in bulk): https://github.com/lluissm/git-utils
 export GIT_UTILS_DIR="$HOME/.git-utils"
 if [ ! -d $GIT_UTILS_DIR ]; then
+    info "Installing git-utils..."
     git clone https://github.com/lluissm/git-utils.git $GIT_UTILS_DIR
 fi
 source $GIT_UTILS_DIR/bulk-utils.sh
@@ -137,6 +155,7 @@ source $GIT_UTILS_DIR/bulk-utils.sh
 
 # Starship prompt
 if ! exists starship; then
+    info "Installing starship..."
     curl -sS https://starship.rs/install.sh | sh
 fi
 

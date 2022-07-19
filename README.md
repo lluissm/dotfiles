@@ -45,7 +45,7 @@ Install custom plugins
 - `starshipconfig`: open ~/.config/starship.toml in vscode.
 - `cls`: clear.
 - `ll`: list all files (with colors).
-- `update_dotfiles`: auto fetch new dotfiles from git.
+- `update_dotfiles`: download latest dotfiles from git and install (does not source .zshrc)
 
 ### Install dev tools
 
