@@ -9,4 +9,4 @@ else
 fi
 
 # execute other script
-./install.local.sh
+zsh ./install.local.sh
