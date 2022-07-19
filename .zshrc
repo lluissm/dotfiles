@@ -143,3 +143,10 @@ fi
 eval "$(starship init zsh)"
 
 ############################## CUSTOM ##############################
+
+# Put your personal configurations in ~/.zcustom file and they will
+# be loaded automatically
+ZCUSTOM_FILE="$HOME/.zcustom"
+if [ -f $ZCUSTOM_FILE ]; then
+    source $ZCUSTOM_FILE
+fi
