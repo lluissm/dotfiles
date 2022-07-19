@@ -15,3 +15,5 @@ else
     mkdir -p ~/.config/
 fi
 cp starship.toml $starship_config_path
+
+source $zshrc_path

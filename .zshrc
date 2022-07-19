@@ -70,6 +70,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 else
     alias ll="ls -la --color=auto"
 fi
+alias update_dotfiles="curl -sL https://raw.githubusercontent.com/lluissm/dotfiles/main/install.sh | sh"
 
 ############################## DEV TOOLS ##############################
 
