@@ -1,21 +1,16 @@
 # .zshrc
 
-############################## ALIAS ##############################
+############################# FUNCTIONS #############################
 
-alias zshconfig="code ~/.zshrc"
-alias starshipconfig="code ~/.config/starship.toml"
-alias cls="clear"
+# create a folder (if it does not exist) and cd to it
 mkcd() {
     mkdir -p "$1" && cd "$1"
 }
+
+# check if a command exists
 exists() {
     command -v "$1" >/dev/null 2>&1
 }
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    alias ll="ls -laG"
-else
-    alias ll="ls -la --color=auto"
-fi
 
 ############################## OH-MY-ZSH ##############################
 
@@ -63,6 +58,18 @@ fi
 ZSH_THEME=""
 
 source $ZSH/oh-my-zsh.sh
+
+############################## ALIAS ##############################
+# alias should be defined after sourcing oh-my-zsh
+
+alias zshconfig="code ~/.zshrc"
+alias starshipconfig="code ~/.config/starship.toml"
+alias cls="clear"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    alias ll="ls -laG"
+else
+    alias ll="ls -la --color=auto"
+fi
 
 ############################## DEV TOOLS ##############################
 
