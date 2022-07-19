@@ -21,6 +21,15 @@ info() {
     echo
 }
 
+# used by this script to warn the user
+warn() {
+    local YELLOW='\033[1;33m'
+    local NO_COLOR='\033[0m'
+    echo
+    echo "${YELLOW}${1}${NO_COLOR}"
+    echo
+}
+
 ############################## OH-MY-ZSH ##############################
 
 export ZSH="$HOME/.oh-my-zsh"
@@ -150,6 +159,11 @@ if [ ! -d $GIT_UTILS_DIR ]; then
     git clone https://github.com/lluissm/git-utils.git $GIT_UTILS_DIR
 fi
 source $GIT_UTILS_DIR/bulk-utils.sh
+
+# GITHUB_CLI (GitHub on the command line): https://github.com/cli/cli
+if ! exists gh; then
+    warn "GitHub CLI is not installed: https://github.com/cli/cli"
+fi
 
 ############################## PROMPT ##############################
 
