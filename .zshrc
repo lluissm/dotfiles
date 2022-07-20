@@ -1,5 +1,9 @@
 # .zshrc
 
+# Put your personal configurations in ~/.zcustom file and they will
+# be sourced at the end
+ZCUSTOM_FILE="$HOME/.zcustom"
+
 ############################# FUNCTIONS #############################
 
 # create a folder (if it does not exist) and cd to it
@@ -84,6 +88,7 @@ source $ZSH/oh-my-zsh.sh
 
 alias zshconfig="code ~/.zshrc"
 alias starshipconfig="code ~/.config/starship.toml"
+alias zcustomconfig="code $ZCUSTOM_FILE"
 alias cls="clear"
 if [[ "$OSTYPE" == "darwin"* ]]; then
     alias ll="ls -laG"
@@ -177,9 +182,7 @@ eval "$(starship init zsh)"
 
 ############################## CUSTOM ##############################
 
-# Put your personal configurations in ~/.zcustom file and they will
-# be loaded automatically
-ZCUSTOM_FILE="$HOME/.zcustom"
+# Source custom configuration
 if [ -f $ZCUSTOM_FILE ]; then
     source $ZCUSTOM_FILE
 fi
