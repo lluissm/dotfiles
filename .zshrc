@@ -155,6 +155,12 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         info "Installing brew..."
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
+    # Install cask-fonts
+    info "Installing cash-fonts..."
+    brew tap homebrew/cask-fonts
+    info "Installing jetbrains mono fonts..."
+    brew install font-jetbrains-mono-nerd-font
+    brew install font-jetbrains-mono
 fi
 
 # GIT_UTILS (clone and update git repos in bulk): https://github.com/lluissm/git-utils
