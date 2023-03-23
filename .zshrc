@@ -83,6 +83,15 @@ ZSH_THEME=""
 
 source $ZSH/oh-my-zsh.sh
 
+############################## HOMEBREW LINUX ##############################
+setup_linux_homebrew() {
+    local HOMEBREW_BIN="/home/linuxbrew/.linuxbrew/bin/brew"
+    if [ -f $HOMEBREW_BIN ]; then
+        eval "$($HOMEBREW_BIN shellenv)"
+    fi
+}
+setup_linux_homebrew
+
 ############################## ALIAS ##############################
 # alias should be defined after sourcing oh-my-zsh
 
