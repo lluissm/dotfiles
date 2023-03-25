@@ -64,7 +64,6 @@ plugins=(
     gh
     git
     gitignore
-    direnv
     # order below is important
     zsh-navigation-tools
     zsh-syntax-highlighting
