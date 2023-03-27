@@ -91,10 +91,16 @@ alias zshconfig="code ~/.zshrc"
 alias starshipconfig="code $STARSHIP_CONFIG_FILE"
 alias zcustomconfig="code $ZCUSTOM_FILE"
 
-alias starship-nerd-fonts="starship preset nerd-font-symbols > $STARSHIP_CONFIG_FILE"
-alias starship-no-nerd-font="starship preset no-nerd-font > $STARSHIP_CONFIG_FILE"
-alias starship-plain-text="starship preset plain-text-symbols > $STARSHIP_CONFIG_FILE"
-alias starship-custom="cp $HOME/.dotfiles/starship.toml $STARSHIP_CONFIG_FILE"
+alias starship-preset-nerd-fonts="starship preset nerd-font-symbols > $STARSHIP_CONFIG_FILE"
+alias starship-preset-no-nerd-font="starship preset no-nerd-font > $STARSHIP_CONFIG_FILE"
+alias starship-preset-plain-text="starship preset plain-text-symbols > $STARSHIP_CONFIG_FILE"
+alias starship-preset-custom="cp $HOME/.dotfiles/starship.toml $STARSHIP_CONFIG_FILE"
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    alias ll="ls -laG"
+else
+    alias ll="ls -la --color=auto"
+fi
 
 alias update_dotfiles="curl -sL https://raw.githubusercontent.com/lluissm/dotfiles/main/install.sh | sh"
 
@@ -106,7 +112,6 @@ if [ ! -d $CUSTOM_TOOLS_DIR ]; then
 fi
 export PATH="$CUSTOM_TOOLS_DIR:$PATH"
 # CUSTOM_TOOLS_DIR end
-
 
 # DIRENV (per directory env vars via .envrc): https://direnv.net/
 update-direnv() {
@@ -129,7 +134,7 @@ if [ ! -f "$CUSTOM_TOOLS_DIR/zoxide" ]; then
 fi
 eval "$(zoxide init zsh)"
 
-# GOLANGCI_LINT (Go linters aggregato): https://golangci-lint.run/
+# GOLANGCI_LINT (Go linters aggregator): https://golangci-lint.run/
 update-golangci-lint() {
     info "Installing golangci-lint..."
     curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $CUSTOM_TOOLS_DIR
