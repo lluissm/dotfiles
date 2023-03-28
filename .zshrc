@@ -64,7 +64,6 @@ plugins=(
     gh
     git
     gitignore
-    direnv
     # order below is important
     zsh-navigation-tools
     zsh-syntax-highlighting
@@ -85,32 +84,64 @@ source $ZSH/oh-my-zsh.sh
 
 ############################## ALIAS ##############################
 # alias should be defined after sourcing oh-my-zsh
+export STARSHIP_CONFIG_FILE="$HOME/.config/starship.toml"
 
-alias zshconfig="code ~/.zshrc"
-alias starshipconfig="code ~/.config/starship.toml"
-alias zcustomconfig="code $ZCUSTOM_FILE"
 alias cls="clear"
+alias zshconfig="code ~/.zshrc"
+alias starshipconfig="code $STARSHIP_CONFIG_FILE"
+alias zcustomconfig="code $ZCUSTOM_FILE"
+
+alias starship-preset-nerd-fonts="starship preset nerd-font-symbols > $STARSHIP_CONFIG_FILE"
+alias starship-preset-no-nerd-font="starship preset no-nerd-font > $STARSHIP_CONFIG_FILE"
+alias starship-preset-plain-text="starship preset plain-text-symbols > $STARSHIP_CONFIG_FILE"
+alias starship-preset-custom="cp $HOME/.dotfiles/starship.toml $STARSHIP_CONFIG_FILE"
+
 if [[ "$OSTYPE" == "darwin"* ]]; then
     alias ll="ls -laG"
 else
     alias ll="ls -la --color=auto"
 fi
+
 alias update_dotfiles="curl -sL https://raw.githubusercontent.com/lluissm/dotfiles/main/install.sh | sh"
 
 ############################## DEV TOOLS ##############################
+# CUSTOM_TOOLS_DIR
+export CUSTOM_TOOLS_DIR="$HOME/.local/bin"
+if [ ! -d $CUSTOM_TOOLS_DIR ]; then
+    mkdir -p $CUSTOM_TOOLS_DIR
+fi
+export PATH="$CUSTOM_TOOLS_DIR:$PATH"
+# CUSTOM_TOOLS_DIR end
 
 # DIRENV (per directory env vars via .envrc): https://direnv.net/
-export DIRENV_DIR="$HOME/.direnv"
-if [ ! -d $DIRENV_DIR ]; then
-    mkdir -p $DIRENV_DIR
-    # direnv installer looks for bin_path env
-    export bin_path=$DIRENV_DIR
+update-direnv() {
+    export bin_path=$CUSTOM_TOOLS_DIR
     info "Installing direnv..."
     curl -sfL https://direnv.net/install.sh | bash
     unset bin_path
+}
+if [ ! -f "$CUSTOM_TOOLS_DIR/direnv" ]; then
+    update-direnv
 fi
-export PATH="$DIRENV_DIR:$PATH"
 eval "$(direnv hook zsh)"
+
+# ZOXIDE (smarter cd command): https://github.com/ajeetdsouza/zoxide
+update-zoxide() {
+    curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
+}
+if [ ! -f "$CUSTOM_TOOLS_DIR/zoxide" ]; then
+    update-zoxide
+fi
+eval "$(zoxide init zsh)"
+
+# GOLANGCI_LINT (Go linters aggregator): https://golangci-lint.run/
+update-golangci-lint() {
+    info "Installing golangci-lint..."
+    curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $CUSTOM_TOOLS_DIR
+}
+if [ ! -f "$CUSTOM_TOOLS_DIR/golangci-lint" ]; then
+    update-golangci-lint
+fi
 
 # NVM (node version manager): https://github.com/nvm-sh/nvm
 export NVM_DIR="$HOME/.nvm"
@@ -155,12 +186,15 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         info "Installing brew..."
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
-    # Install cask-fonts
-    info "Installing cash-fonts..."
-    brew tap homebrew/cask-fonts
-    info "Installing jetbrains mono fonts..."
-    brew install font-jetbrains-mono-nerd-font
-    brew install font-jetbrains-mono
+    
+    install-fonts() {
+        info "Installing cash-fonts..."
+        brew tap homebrew/cask-fonts
+        
+        info "Installing jetbrains mono fonts..."
+        brew install font-jetbrains-mono-nerd-font
+        brew install font-jetbrains-mono
+    }
 fi
 
 # GIT_UTILS (clone and update git repos in bulk): https://github.com/lluissm/git-utils
@@ -173,17 +207,19 @@ source $GIT_UTILS_DIR/bulk-utils.sh
 
 # GITHUB_CLI (GitHub on the command line): https://github.com/cli/cli
 if ! exists gh; then
-    warn "GitHub CLI is not installed: https://github.com/cli/cli"
+    warn "GitHub CLI is not installed: https://github.com/cli/cli#installation"
 fi
 
 ############################## PROMPT ##############################
 
 # Starship prompt
-if ! exists starship; then
+update-starship() {
     info "Installing starship..."
     curl -sS https://starship.rs/install.sh | sh
+}
+if ! exists starship; then
+    update-starship
 fi
-
 eval "$(starship init zsh)"
 
 ############################## CUSTOM ##############################
