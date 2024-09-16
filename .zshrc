@@ -152,17 +152,6 @@ fi
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
-# DENO (runtime for js/ts): https://deno.land/
-export DENO_DIR="$HOME/.deno"
-if [ ! -d $DENO_DIR ]; then
-    # deno installer looks for DENO_INSTALL env
-    export DENO_INSTALL=$DENO_DIR
-    info "Installing deno..."
-    curl -fsSL https://deno.land/install.sh | sh
-    unset DENO_INSTALL
-fi
-export PATH="$DENO_DIR/bin:$PATH"
-
 # GVM (Go version manager): https://github.com/moovweb/gvm
 export GVM_DIR="$HOME/.gvm"
 if [ ! -d $GVM_DIR ]; then
