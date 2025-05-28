@@ -1,6 +1,6 @@
 # dotfiles
 
-My minimal yet powerful (and fast) zsh configuration for development.
+My zsh configuration for development, installable with a single command.
 
 ![Header](images/demo.gif)
 
@@ -54,7 +54,6 @@ Install (if not already installed):
 
 - [direnv](https://direnv.net/): load and unload environment variables depending on the current directory.
 - [nvm](https://github.com/nvm-sh/nvm): node version manager.
-- [deno](https://deno.land/): modern runtime for JavaScript and TypeScript.
 - [gvm](https://github.com/moovweb/gvm): go version manager.
 - [cargo](https://www.rust-lang.org/): rust programming language and tools.
 - [brew](https://brew.sh/): package manager for OSX.
