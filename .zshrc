@@ -45,6 +45,9 @@ if [ ! -d $ZSH ]; then
     curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh -s -- --keep-zshrc
 fi
 
+############################## OH-MY-ZSH PLUGINS ##############################
+
+# Function to install custom plugins if not already present
 setup_custom_plugin() {
     local plugin_path=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/$1
     local plugin_url=$2
@@ -60,26 +63,20 @@ setup_custom_plugin zsh-autosuggestions https://github.com/zsh-users/zsh-autosug
 setup_custom_plugin zsh-syntax-highlighting https://github.com/zsh-users/zsh-syntax-highlighting
 
 # Configure oh-my-zsh plugins
+# Note: zsh-syntax-highlighting should always be last for best performance
 plugins=(
     gh
     git
-    gitignore
     # order below is important
     zsh-navigation-tools
-    zsh-syntax-highlighting
     zsh-autosuggestions
+    zsh-syntax-highlighting
 )
-
-# Add dnf plugin only if dnf package manager is installed (for fedora linux)
-if [[ "$OSTYPE" == "linux"* ]]; then
-    if exists dnf; then
-        plugins+=(dnf)
-    fi
-fi
 
 # Disable zsh_theme as we use starship
 ZSH_THEME=""
 
+# Initialize Oh My Zsh (must come after plugins are set)
 source $ZSH/oh-my-zsh.sh
 
 ############################## ALIAS ##############################
@@ -111,7 +108,6 @@ if [ ! -d $CUSTOM_TOOLS_DIR ]; then
     mkdir -p $CUSTOM_TOOLS_DIR
 fi
 export PATH="$CUSTOM_TOOLS_DIR:$PATH"
-# CUSTOM_TOOLS_DIR end
 
 # DIRENV (per directory env vars via .envrc): https://direnv.net/
 update-direnv() {
@@ -143,31 +139,6 @@ if [ ! -f "$CUSTOM_TOOLS_DIR/golangci-lint" ]; then
     update-golangci-lint
 fi
 
-# NVM (node version manager): https://github.com/nvm-sh/nvm
-export NVM_DIR="$HOME/.nvm"
-if [ ! -d $NVM_DIR ]; then
-    info "Installing nvm..."
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | sh
-fi
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
-
-# GVM (Go version manager): https://github.com/moovweb/gvm
-export GVM_DIR="$HOME/.gvm"
-if [ ! -d $GVM_DIR ]; then
-    info "Installing gvm..."
-    bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
-fi
-[ -s "$GVM_DIR/scripts/gvm" ] && \. "$GVM_DIR/scripts/gvm"
-
-# RUST (programming language): https://www.rust-lang.org/
-export CARGO_DIR="$HOME/.cargo"
-if [ ! -d $CARGO_DIR ]; then
-    info "Installing rust..."
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-fi
-[ -s "$CARGO_DIR/env" ] && \. "$CARGO_DIR/env"
-
 # HOMEBREW (package manager for OSX): https://brew.sh/
 if [[ "$OSTYPE" == "darwin"* ]]; then
     export PATH="$PATH:$HOME/bin:/usr/local/bin:/opt/homebrew/bin"
@@ -175,11 +146,11 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         info "Installing brew..."
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
-    
+
     install-fonts() {
         info "Installing cash-fonts..."
         brew tap homebrew/cask-fonts
-        
+
         info "Installing jetbrains mono fonts..."
         brew install font-jetbrains-mono-nerd-font
         brew install font-jetbrains-mono
