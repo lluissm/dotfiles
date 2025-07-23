@@ -65,7 +65,6 @@ setup_custom_plugin zsh-syntax-highlighting https://github.com/zsh-users/zsh-syn
 # Configure oh-my-zsh plugins
 # Note: zsh-syntax-highlighting should always be last for best performance
 plugins=(
-    gh
     git
     # order below is important
     zsh-navigation-tools
@@ -130,15 +129,6 @@ if [ ! -f "$CUSTOM_TOOLS_DIR/zoxide" ]; then
 fi
 eval "$(zoxide init zsh)"
 
-# GOLANGCI_LINT (Go linters aggregator): https://golangci-lint.run/
-update-golangci-lint() {
-    info "Installing golangci-lint..."
-    curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $CUSTOM_TOOLS_DIR
-}
-if [ ! -f "$CUSTOM_TOOLS_DIR/golangci-lint" ]; then
-    update-golangci-lint
-fi
-
 # HOMEBREW (package manager for OSX): https://brew.sh/
 if [[ "$OSTYPE" == "darwin"* ]]; then
     export PATH="$PATH:$HOME/bin:/usr/local/bin:/opt/homebrew/bin"
@@ -164,11 +154,6 @@ if [ ! -d $GIT_UTILS_DIR ]; then
     git clone https://github.com/lluissm/git-utils.git $GIT_UTILS_DIR
 fi
 source $GIT_UTILS_DIR/bulk-utils.sh
-
-# GITHUB_CLI (GitHub on the command line): https://github.com/cli/cli
-if ! exists gh; then
-    warn "GitHub CLI is not installed: https://github.com/cli/cli#installation"
-fi
 
 ############################## PROMPT ##############################
 

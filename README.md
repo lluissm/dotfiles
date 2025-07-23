@@ -29,7 +29,6 @@ To add custom configurations that will not get overridden every time you update 
 
 Install and setup plugins from ohmyzsh:
 
-- [gh](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/gh): GitHub CLI auto completion.
 - [git](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git): alias and functions for git.
 - [zsh-navigation-tools](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/zsh-navigation-tools): set of tools for navigating through history, etc.
 
